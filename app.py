@@ -168,14 +168,16 @@ def get_studentAddress():
         addresscursor = students.find_one({"email" : f"{data['email']}", "address": {"$exists": 1}})
         addressdict = json.loads(json_util.dumps(addresscursor))
 
-        student = {
-            "name" : addressdict['name'],
-            "street": addressdict['address'][0]['street'],
-            "postcode": addressdict['address'][0]['postcode']
-        }
 
 
         if addressdict:
+            
+            student = {
+                "name" : addressdict['name'],
+                "street": addressdict['address'][0]['street'],
+                "postcode": addressdict['address'][0]['postcode']
+            }
+            
             return Response(json.dumps(student), status=200, mimetype='application/json')
         else:
             return Response("No student found", status=400, mimetype="application/json")
